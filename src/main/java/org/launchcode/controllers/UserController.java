@@ -12,22 +12,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("user")
 public class UserController {
 
-    @RequestMapping(value = "add", method = RequestMethod.GET)
-    public String displayAddUserForm(Model model) {
-        model.addAttribute("title", "Add User");
-        model.addAttribute(new User());
+    @RequestMapping(value = "add")
+    public String add(Model model) {
+        model.addAttribute("title", "User Signup");
         return "user/add";
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String add(Model model, @ModelAttribute User user, String verify){
         if (verify.equals(user.getPassword())) {
-            model.addAttribute("user", user.getUsername());
+            model.addAttribute("user", user);
             return "user/index";
         }
         else{
-
-            return "cheese/add";
+            model.addAttribute("username", user.getUsername());
+            model.addAttribute("email", user.getEmail());
+            model.addAttribute("title", "User Signup");
+            model.addAttribute("message", "Passwords do not match");
+            return "user/add";
         }
     }
 
