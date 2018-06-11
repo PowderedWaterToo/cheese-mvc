@@ -7,33 +7,36 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<form method="post" style="max-width:600px;">
+<form method="post" style="max-width:600px;" th:object="${user}">
 
     <div class="form-group">
-        <label for="username-field">Username</label>
-        <input class="form-control" id="username-field" type="text" name="username" th:value="${username}"/>
+        <label th:for="username">Username</label>
+        <input class="form-control" th:field="*{username}"/>
+        <span th:errors="*{username}" class="error"></span>
     </div>
 
     <div class="form-group">
-        <label for="email-field">Email:</label>
-        <input class="form-control" id="email-field" type="email" name="email" th:value="${email}"/>
+        <label th:for="email">Email:</label>
+        <input class="form-control" th:field="*{email}" type="email" />
+        <span th:errors="*{email}" class="error"></span>
     </div>
 
     <div class="form-group">
-        <label for="password-field">Password:</label>
-        <input class="form-control" id="password-field" type="password" name="password" />
+        <label th:for="password">Password:</label>
+        <input class="form-control" th:field="*{password}" type="password" />
+        <span th:errors="*{password}" class="error"></span>
     </div>
 
     <div class="form-group">
         <label for="verify-field">Verify:</label>
         <input class="form-control" id="verify-field" type="password" name="verify" />
+        <span class="error" th:text="${message}"></span>
+
     </div>
 
     <input type="submit" value="Sign Up" />
 
 </form>
-
-<span class="error" th:text="${message}"></span>
 
 </body>
 

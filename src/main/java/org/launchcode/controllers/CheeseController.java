@@ -67,7 +67,6 @@ public class CheeseController {
 
         if (errors.hasErrors()) {
             model.addAttribute("cheese", oldCheese);
-            model.addAttribute("title", "Add Cheese");
             model.addAttribute("cheeseTypes", CheeseType.values());
             return "cheese/edit";
         }
