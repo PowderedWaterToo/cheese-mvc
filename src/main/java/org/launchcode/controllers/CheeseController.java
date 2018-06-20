@@ -48,7 +48,7 @@ public class CheeseController {
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddCheeseForm(@ModelAttribute  @Valid Cheese newCheese,
-                                       Errors errors, @RequestParam int categoryId, Model model) {
+                                       Errors errors, @RequestParam Category category, Model model) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Cheese");
@@ -56,6 +56,7 @@ public class CheeseController {
             return "cheese/add";
         }
 
+        int categoryId = category.getId();
         Category cat = categoryDao.findOne(categoryId);
         newCheese.setCategory(cat);
         cheeseDao.save(newCheese);
