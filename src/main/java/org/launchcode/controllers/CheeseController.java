@@ -3,6 +3,7 @@ package org.launchcode.controllers;
 import org.launchcode.models.Category;
 import org.launchcode.models.Cheese;
 import org.launchcode.models.CheeseType;
+import org.launchcode.models.Menu;
 import org.launchcode.models.data.CategoryDao;
 import org.launchcode.models.data.CheeseDao;
 import org.launchcode.models.data.MenuDao;
@@ -13,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -108,7 +110,13 @@ public class CheeseController {
     public String processRemoveCheeseForm(@RequestParam int[] cheeseIds) {
 
         for (int cheeseId : cheeseIds) {
-
+            Iterable<Menu> menus = menuDao.findAll();
+            for (Menu menu : menus) {
+                List<Cheese> menuCheeses = menu.getCheeses();
+                if (menuCheeses.contains(cheeseDao.findOne(cheeseId))) {
+                    menu.removeItem(cheeseDao.findOne(cheeseId));
+                }
+            }
             cheeseDao.delete(cheeseId);
         }
 
